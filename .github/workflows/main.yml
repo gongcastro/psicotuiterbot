@@ -2,7 +2,7 @@ name: psicotuiterbot
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: * * * * *
 
 jobs:
   psicotuiterbot-post:
