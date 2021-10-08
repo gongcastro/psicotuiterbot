@@ -19,7 +19,7 @@ jobs:
       - name: Update Linux libs
         run: sudo apt update && sudo apt upgrade
       - name: Install curl
-        run: sudo apt install curl
+        run: sudo apt install libcurl4-openssl-dev
       - name: Set up GitHub actions
         uses: actions/checkout@master
       - name: Set up R
