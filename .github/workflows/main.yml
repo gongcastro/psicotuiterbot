@@ -16,9 +16,11 @@ jobs:
       TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
       TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-renv@master
+        with:
+          cache-version: 2
       - name: Install rtweet package
-        run: Rscript -e 'install.packages("rtweet", dependencies = TRUE)'
       - name: Create and post tweet
         run: Rscript bot.R
