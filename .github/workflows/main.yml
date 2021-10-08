@@ -22,7 +22,5 @@ jobs:
         uses: r-lib/actions/setup-r@master
       - name: Set up setup renv
         uses: r-lib/actions/setup-renv@v1
-          with:
-            cache-version: 2
       - name: Create and post tweet
         run: Rscript bot.R
