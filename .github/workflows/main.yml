@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@master
-      - uses: r-lib/actions/setup-renv@master
+      - uses: r-lib/actions/setup-renv@v1
         with:
           cache-version: 2
       - name: Install rtweet package
