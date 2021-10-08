@@ -1,11 +1,8 @@
 name: psicotuiterbot
 
 on:
-  push:
-    branches: [main, master]
-    tags: ['*']
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/1 * * * *'
 
 jobs:
   psicotuiterbot-post:
