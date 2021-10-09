@@ -10,7 +10,7 @@ on:
 jobs:
 
   psicotuiterbot-post:
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     env: #  twitter API keys (used to authenticate) defined in the gh actions environment
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
       TWITTER_CONSUMER_API_SECRET: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}

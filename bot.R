@@ -1,6 +1,6 @@
 # bot R code
 
-psicotuiterbot_token <- rtweet::create_token(
+rtweet::create_token(
     app = "psicotuiterbot",  # the name of the Twitter app
     consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
     consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_SECRET"),
@@ -9,6 +9,5 @@ psicotuiterbot_token <- rtweet::create_token(
 )
 
 rtweet::post_tweet(
-    status = "Tuit de prueba",
-    token = psicotuiterbot_token
+    status = "Tuit de prueba"
 )
