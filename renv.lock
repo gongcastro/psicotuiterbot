@@ -37,6 +37,13 @@
       "Repository": "CRAN",
       "Hash": "e3ae5d68dea0c55a12ea12a9fda02e61"
     },
+    "cpp11": {
+      "Package": "cpp11",
+      "Version": "0.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "40ba3fd26c8f61d8d14d334bc7761df9"
+    },
     "crayon": {
       "Package": "crayon",
       "Version": "1.4.1",
@@ -127,6 +134,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "a6b6d352e3ed897373ab19d8395c98d0"
+    },
+    "lubridate": {
+      "Package": "lubridate",
+      "Version": "1.8.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2ff5eedb6ee38fb1b81205c73be1be5a"
     },
     "magrittr": {
       "Package": "magrittr",
