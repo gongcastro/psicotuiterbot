@@ -4,3 +4,5 @@
 
 ![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fpsicotuiterbot)
 
+![GitHub top language](https://img.shields.io/github/languages/top/gongcastro/psicotuiterbot)
+
