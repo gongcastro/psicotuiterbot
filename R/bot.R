@@ -15,7 +15,7 @@ my_token <- create_token(
 )
 
 status_ids <- search_tweets("#psicotuiter", type = "recent", token = my_token) %>% 
-    filter(!is.na(retweet_status_id), created_at > now()-minutes(15)) %>% 
+    filter(is.na(retweet_status_id), created_at > now(tzone = "UCT")-minutes(15)) %>% 
     pull(status_id)
 
 for (i in 1:length(status_ids)){
