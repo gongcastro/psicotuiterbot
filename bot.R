@@ -1,7 +1,5 @@
 # bot R code
 
-
-# Example: post a tweet via the API
 psicotuiterbot_token <- rtweet::create_token(
     app = "psicotuiterbot",  # the name of the Twitter app
     consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
