@@ -18,9 +18,7 @@ jobs:
       TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
       
     steps:
-      - name: Install curl
-        run: sudo apt install libcurl4-openssl-dev # rtweet system dependency
-        
+
       - name: Set up GitHub actions
         uses: actions/checkout@v2
         with: # cache gh-actions
