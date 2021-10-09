@@ -1,2 +1,10 @@
 Package: psicotuiterbot
+Title: Bot de Twitter que retuitea menciones a #psicotuiter
 Imports: rtweet
+Version: 0.1
+Authors@R: person("Gonzalo", "Garcia-Castro", email = "gonzalo.garciadecastro@upf.edu",
+                  role = c("aut", "cre"))
+Description: Bot de Twitter que retuitea menciones a #psicotuiter              
+Depends: R (>= 3.1.0)
+License: GNU GENERAL PUBLIC LICENSE
+LazyData: true
