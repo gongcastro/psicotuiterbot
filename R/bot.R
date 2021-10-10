@@ -13,7 +13,7 @@ my_token <- rtweet::create_token(
 )
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
-status_ids <- rtweet::search_tweets("#psicotuiter", type = "recent", token = my_token) %>% 
+status_ids <- rtweet::search_tweets("#psicotuiter OR #psicotwitter", type = "recent", token = my_token) %>% 
     filter(is.na(retweet_status_id), created_at > lubridate::now(tzone = "UCT")-lubridate::minutes(15)) %>% 
     pull(status_id) # get vector with IDs
 
