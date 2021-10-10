@@ -18,10 +18,12 @@ status_ids <- rtweet::search_tweets("#psicotuiter OR #psicotwitter", type = "rec
     pull(status_id) # get vector with IDs
 
 # RT all IDs
-for (i in 1:length(status_ids)){
-    rtweet::post_tweet(
-        retweet_id = status_ids[i],
-        token = my_token
-    )
+if (length(status_ids) > 0){
+    for (i in 1:length(status_ids)){
+        rtweet::post_tweet(
+            retweet_id = status_ids[i],
+            token = my_token
+        )
+    }
 }
 
