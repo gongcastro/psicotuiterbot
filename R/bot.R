@@ -12,8 +12,11 @@ my_token <- rtweet::create_token(
     access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET")
 )
 
+# define hashtags
+hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicowitter OR #PsicoTuiter OR #PsicoTwitter"
+
 # retrieve mentions to #psicotuiter in the last 15 minutes
-status_ids <- rtweet::search_tweets("#psicotuiter OR #psicotwitter", type = "recent", token = my_token) %>% 
+status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token) %>% 
     filter(
         is.na(retweet_status_id), # eliminar RTs
            created_at > lubridate::now(tzone = "UCT")-lubridate::minutes(15) # 15 min
