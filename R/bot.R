@@ -20,7 +20,7 @@ status_ids <- rtweet::search_tweets("#psicotuiter OR #psicotwitter", type = "rec
 # RT all IDs
 for (i in 1:length(status_ids)){
     rtweet::post_tweet(
-        retweet_id = status_ids[1],
+        retweet_id = status_ids[i],
         token = my_token
     )
 }
