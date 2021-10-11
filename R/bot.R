@@ -14,13 +14,14 @@ my_token <- rtweet::create_token(
 
 # define hashtags
 hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicotwitter OR #PsicoTuiter OR #PsicoTwitter"
+time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(15)
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
 status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token) %>% 
     filter(
-        is.na(retweet_status_id), # eliminar RTs
-           created_at > lubridate::now(tzone = "UCT")-lubridate::minutes(15) # 15 min
-        ) %>% 
+        !is_retweet, # eliminar RTs
+        created_at >=  time_interval # 15 min
+    ) %>% 
     pull(status_id) # get vector with IDs
 
 # RT all IDs
@@ -31,5 +32,8 @@ if (length(status_ids) > 0){
             token = my_token
         )
     }
+    print(paste0(length(status_ids), "tweets posted"))
+} else {
+    print("No tweets to post")
 }
 
