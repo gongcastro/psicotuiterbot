@@ -17,9 +17,8 @@ hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicotwitter OR #
 time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(15)
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
-status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token) %>% 
+status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token, include_rts = FALSE) %>% 
     filter(
-        !is_retweet, # eliminar RTs
         created_at >=  time_interval # 15 min
     ) %>% 
     pull(status_id) # get vector with IDs
