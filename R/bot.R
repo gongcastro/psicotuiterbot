@@ -13,7 +13,7 @@ my_token <- rtweet::create_token(
 )
 
 # define hashtags
-hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicowitter OR #PsicoTuiter OR #PsicoTwitter"
+hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicotwitter OR #PsicoTuiter OR #PsicoTwitter"
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
 status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token) %>% 
