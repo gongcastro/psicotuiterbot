@@ -13,6 +13,8 @@ my_token <- rtweet::create_token(
     access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET")
 )
 
+source(here::here("R", "utils.R"))
+
 # define hashtags
 hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicotwitter OR #PsicoTuiter OR #PsicoTwitter"
 
