@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  psicotuiterbot-post:
+  counts:
     runs-on: macOS-latest
     env: #  twitter API keys (used to authenticate) defined in the gh actions environment
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
@@ -28,5 +28,5 @@ jobs:
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
           renv::restore()
-      - name: Create and post tweet
+      - name: Generate figure
         run: Rscript R/counts.R
