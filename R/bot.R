@@ -14,7 +14,6 @@ my_token <- rtweet::create_token(
 
 # define hashtags
 hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicotwitter OR #PsicoTuiter OR #PsicoTwitter"
-hate_words <- 
 time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(120)
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
