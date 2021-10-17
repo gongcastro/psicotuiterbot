@@ -23,6 +23,26 @@ status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token,
     ) %>% 
     pull(status_id) # get vector with IDs
 
+# simple hate words filter
+hate_words <- matrix(c("Gay", "gay", "Maricon", "maricon", "Marica", "marica"), ncol = 1) # words banned from psicotuiterbot (subject to change)
+
+if (length(status_ids) > 0){
+  for (i in length(hate_words)){
+    filt <- paste(hashtags, hate_words[i], sep = " AND ") # adding words to the filter (not sure if needs one AND for each hastag)
+    status_ids_hate <- rtweet::search_tweets(filt, type = "recent", token = my_token, include_rts = FALSE) %>%
+      filter(
+        created_at >=  time_interval # 15 min
+      ) %>% 
+      pull(status_id) # get vector with IDs
+    status_ids <- status_ids %>%
+      filter(
+        !status_ids %in% status_ids_hate[,1] # deleting al the IDs in status_ids_hate from status_ids
+      ) 
+  }
+} else {
+    print("No tweets to filter")
+}
+
 # RT all IDs
 if (length(status_ids) > 0){
     for (i in 1:length(status_ids)){
@@ -35,4 +55,3 @@ if (length(status_ids) > 0){
 } else {
     print("No tweets to post")
 }
-
