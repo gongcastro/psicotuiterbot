@@ -29,11 +29,11 @@ tweets_all <- lapply(files, readRDS) %>%
     mutate(created_at = lubridate::as_date(created_at)) %>% 
     count(created_at)
 
-ggplot(tweets_all, aes(created_at, y = n)) +
+fig <- ggplot(tweets_all, aes(created_at, y = n)) +
     geom_vline(xintercept = lubridate::dmy("9-10-2021"), colour = "grey", size = 1) +
-    geom_line(colour = "#ad03fc", size = 1.5) +
-    geom_point(colour = "#ad03fc", size = 3, stroke = 1, fill = "black") +
+    geom_line(colour = "orange", size = 1.5) +
+    geom_point(colour = "orange", size = 3, stroke = 1, fill = "black") +
     labs(x = "Fecha", y = "Tweets mencionando #psictuiter o #psicotwitter") +
     theme_github()
 
-ggsave(here::here("img", "counts.png"), dpi = 1000)
+ggsave(fig, here::here("img", "counts.png"), dpi = 1000)
