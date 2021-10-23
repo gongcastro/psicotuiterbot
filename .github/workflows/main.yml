@@ -22,7 +22,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-renv@v1
         with:
-          cache-version: 2
+          cache-version: 1
       - name: Restore packages using renv
         shell: Rscript {0}
         run: |

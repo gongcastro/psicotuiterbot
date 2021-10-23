@@ -30,3 +30,11 @@ jobs:
           renv::restore()
       - name: Generate figure
         run: Rscript R/counts.R
+            - name: Commit results
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add img/counts.png
+          git commit -m 'Generate plot' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"
+        
