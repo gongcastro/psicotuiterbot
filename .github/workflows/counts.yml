@@ -30,7 +30,7 @@ jobs:
           renv::restore()
       - name: Generate figure
         run: Rscript R/counts.R
-            - name: Commit results
+      - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
