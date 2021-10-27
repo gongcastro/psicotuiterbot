@@ -3,6 +3,9 @@ library(dplyr)
 
 options(httr_oob_default = TRUE)
 
+# restore packages
+renv::restore()
+
 # authenticate Twitter API
 my_token <- rtweet::create_token(
     app = "psicotuiterbot",  # the name of the Twitter app
