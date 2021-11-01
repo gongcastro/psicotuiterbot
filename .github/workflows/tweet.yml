@@ -1,12 +1,10 @@
 name: psicotuiterbot
 
 on:
-  schedule:
-    - cron: '*/15 * * * *' # run every 15th minute
   push:
     branches:
       - main # run every time there is a push to main branch
-
+      - test
 jobs:
 
   psicotuiterbot-post:
