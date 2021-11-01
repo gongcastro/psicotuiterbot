@@ -21,10 +21,11 @@ hate_words <- unlist(strsplit(Sys.getenv("HATE_WORDS"), " ")) # words banned fro
 time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(120)
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
-status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token, include_rts = FALSE) %>% 
+status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token, include_rts = FALSE, tzone = "CET") %>% 
     filter(
         created_at >=  time_interval, # 15 min
-        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
+        !grepl(paste(hate_words, collapse = "|"), text), # filter out hate words
+       stringr::str_count(text, "#") < 4 # no more than 3 hashtags
     ) %>% 
     pull(status_id) # get vector with IDs
 
