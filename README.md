@@ -1,4 +1,4 @@
-# psicotuiterbot :robot:
+icotuiterbot :robot:
 
 ![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fpsicotuiterbot)
 ![GitHub top language](https://img.shields.io/github/languages/top/gongcastro/psicotuiterbot)
@@ -33,3 +33,4 @@ Puedes contribuir al bot de muchas formas:
 - Aportando sugerencias o reportando fallos a travésde mis MD de twitter ([@gongcastro](https://twitter.com/gongcastro)) o creando un [*issue*](https://github.com/gongcastro/psicotuiterbot/issues) en el repositorio de GitHub. :mailbox_with_mail:
 - Proponiendo cambios en el código haciendo un [*pull request*](https://github.com/gongcastro/psicotuiterbot/pulls). :computer:
 - Supervisando la actividad del bot en Twitter y notificándome cualquier uso indebido del mismo. :monocle_face:
+
