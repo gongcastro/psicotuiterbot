@@ -8,9 +8,9 @@ theme_github <- function(){
         panel.grid.major.y = element_line(colour = "white", linetype = "dotted"),
         panel.grid.minor.y = element_line(colour = "black", linetype = "dotted"),
         panel.background = element_rect(fill = "transparent", colour = NA),
-        axis.text = element_text(size = 12, colour = "orange"),
+        axis.text = element_text(size = 12, colour = "#ff4d00"),
         axis.title.x = element_blank(),
-        axis.title.y = element_text(colour = "orange", size = 12), 
-        axis.line = element_line(colour = "orange", size = 1)
+        axis.title.y = element_text(colour = "#ff4d00", size = 12), 
+        axis.line = element_line(colour = "#ff4d00", size = 1)
     )
 }
