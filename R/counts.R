@@ -32,7 +32,7 @@ tweets_all <- lapply(files, readRDS) %>%
 fig <- ggplot(tweets_all, aes(created_at, y = n)) +
     geom_vline(xintercept = lubridate::dmy("9-10-2021"), colour = "grey", size = 1) +
     geom_line(colour = "orange", size = 1.5) +
-    # geom_point(colour = "orange", size = 3, stroke = 1, fill = "black") +
+    geom_point(colour = "orange", size = 3, stroke = 1, fill = "black") +
     labs(x = "Fecha", y = "Tweets mencionando #psictuiter o #psicotwitter") +
     theme_github()
 
