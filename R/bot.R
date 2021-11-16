@@ -12,7 +12,8 @@ my_token <- rtweet::create_token(
     consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
     consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_KEY_SECRET"),
     access_token = Sys.getenv("TWITTER_ACCESS_TOKEN"),
-    access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+    access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET"), 
+    set_renv = FALSE
 )
 
 # define hashtags
@@ -21,7 +22,13 @@ hate_words <- unlist(strsplit(Sys.getenv("HATE_WORDS"), " ")) # words banned fro
 time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(120)
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
-status_ids <- rtweet::search_tweets(hashtags, type = "recent", token = my_token, include_rts = FALSE, tzone = "CET") %>% 
+status_ids <- rtweet::search_tweets(
+    hashtags, 
+    type = "recent", 
+    token = my_token, 
+    include_rts = FALSE, 
+    tzone = "CET"
+    ) %>% 
     filter(
         created_at >=  time_interval, # 15 min
         !grepl(paste(hate_words, collapse = "|"), text), # filter out hate words
