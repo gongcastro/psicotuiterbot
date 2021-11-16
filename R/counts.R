@@ -20,7 +20,12 @@ source(here::here("R", "utils.R"))
 hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicotwitter OR #PsicoTuiter OR #PsicoTwitter"
 
 # retrieve mentions to #psicotuiter in the last 15 minutes
-status <- rtweet::search_tweets(hashtags, type = "recent", token = my_token, include_rts = FALSE)
+status <- rtweet::search_tweets(
+    hashtags, 
+    type = "recent", 
+    token = my_token, 
+    include_rts = FALSE
+)
 saveRDS(status, here::here("data", paste0(lubridate::today(), "_tweets.rds")))
 
 files <- list.files(here::here("data"), pattern = ".rds", full.names = TRUE)
