@@ -39,7 +39,7 @@ status_ids <- rtweet::search_tweets(
 
 
 # get request ID
-status_ids <- rtweet::get_mentions(
+request_ids <- rtweet::get_mentions(
     token = my_token, 
     tzone = "CET"
 ) %>% 
@@ -68,7 +68,7 @@ if (length(status_ids) > 0){
         )
     }
     # tweet requests
-    if (length(requested_ids) > 0){
+    if (length(request_ids) > 0){
         for (i in 1:length(requested_ids)){
             rtweet::post_tweet(
                 retweet_id = unique(requested_ids[i]), # vector with IDs
