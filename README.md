@@ -12,12 +12,15 @@ icotuiterbot :robot:
 
 ## Normas de uso :scroll:
 
-* El bot hará RT a cualquier tweet que mencione #psicotuiter o #psicotwitter (el uso de mayúsculas o minúsculas es indiferente).
+* El bot hará RT a tweets que mencionen #psicotuiter o #psicotwitter (el uso de mayúsculas o minúsculas es indiferente)
+* Se pueden hacer solicitudes de Rt para otros tuits: el bot hace RT a tweets que mencionen su usuario @psicotuiterbot) junto con la palabra "RT" (ej., "RT @psicotuiterbot")
 * El bot ignora menciones (ej. incluir @psicotuiterbot no garantiza RT)
 * Cualquier uso del bot con la intención de compartir discurso de odio o mensajes engañosos conllevará el bloqueo permanente
 * Se excluirán tweets que contengan más de tres hashtags, con el fin de evitar uso 
 * El uso repetido del hashtag para compartir contenidos ajenos a la psicología conllevará bloqueo no permanente del bot
 * En caso de incluir #psicotuiter o #psicotwitter en un hilo, se recomienda hacerlo sólo en el primer tweet (o al menos no hacerlo en todos los tweets), para evitar saturar el timeline de otras personas
+
+Los criterios de exclusión se aplican tanto a los tuits que mencionen los hashtags como a los tuits para los que se solicite RT.
 
 ## Actividad del hashtag :chart_with_upwards_trend:
 
