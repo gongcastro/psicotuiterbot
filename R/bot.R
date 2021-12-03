@@ -17,32 +17,66 @@ my_token <- rtweet::create_token(
 )
 
 # define hashtags
-hashtags <- "#psicotuiter OR #psicotwitter OR #Psicotuiter OR #Psicotwitter OR #PsicoTuiter OR #PsicoTwitter"
+hashtags_vct <- c("#psicotuiter", "#psicotwitter", "#Psicotuiter", "#Psicotwitter", "#PsicoTuiter", "#PsicoTwitter")
+hashtags <- paste(hashtags_vct, collapse = " OR ")
 hate_words <- unlist(strsplit(Sys.getenv("HATE_WORDS"), " ")) # words banned from psicotuiterbot (separated by a space)
 time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(120)
 
-# retrieve mentions to #psicotuiter in the last 15 minutes
+# get mentions to #psicotuiter and others
 status_ids <- rtweet::search_tweets(
     hashtags, 
     type = "recent", 
     token = my_token, 
     include_rts = FALSE, 
     tzone = "CET"
-    ) %>% 
+) %>% 
     filter(
         created_at >=  time_interval, # 15 min
         !grepl(paste(hate_words, collapse = "|"), text), # filter out hate words
-       stringr::str_count(text, "#") < 4 # no more than 3 hashtags
+        stringr::str_count(text, "#") < 4 # no more than 3 hashtags
     ) %>% 
-    pull(status_id) # get vector with IDs
+    pull(status_id)
+
+
+# get request ID
+request_ids <- rtweet::get_mentions(
+    token = my_token, 
+    tzone = "CET"
+) %>% 
+    filter(
+        created_at >= time_interval, # 15 min
+        grepl("@psicotuiterbot", text),
+        grepl("rt|RT|Rt", text),
+        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
+    ) %>% 
+    pull(status_in_reply_to_status_id)
+
+# get requested IDS
+requested_ids <- rtweet::lookup_statuses(request_ids) %>%  
+    filter(
+        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
+    ) %>% 
+    pull(status_id)
+
 
 # RT all IDs
 if (length(status_ids) > 0){
     for (i in 1:length(status_ids)){
         rtweet::post_tweet(
-            retweet_id = status_ids[i],
+            retweet_id = unique(status_ids[i]), # vector with IDs
             token = my_token
         )
+    }
+    # tweet requests
+    if (length(request_ids) > 0){
+        for (i in 1:length(requested_ids)){
+            rtweet::post_tweet(
+                retweet_id = unique(requested_ids[i]), # vector with IDs
+                token = my_token
+            )
+        }
+        print(paste0(length(requested_ids), " request(s) posted: ", paste(requested_ids, collapse = ", ")))
+        
     }
     print(paste0(length(status_ids), " tweet(s) posted: ", paste(status_ids, collapse = ", ")))
 } else {
