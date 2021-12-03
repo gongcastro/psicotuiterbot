@@ -39,12 +39,12 @@ status_ids <- rtweet::search_tweets(
 
 
 # get request ID
-request_ids <- rtweet::get_mentions(
+status_ids <- rtweet::get_mentions(
     token = my_token, 
     tzone = "CET"
 ) %>% 
     filter(
-        created_at >=  time_interval, # 15 min
+        created_at >= time_interval, # 15 min
         grepl("@psicotuiterbot", text),
         grepl("rt|RT|Rt", text),
         !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
