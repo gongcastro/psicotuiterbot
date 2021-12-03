@@ -46,12 +46,16 @@ request_ids <- rtweet::get_mentions(
     filter(
         created_at >= time_interval, # 15 min
         grepl("@psicotuiterbot", text),
-        grepl("rt|RT|Rt", text)
+        grepl("rt|RT|Rt", text),
+        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
     ) %>% 
     pull(status_in_reply_to_status_id)
 
 # get requested IDS
-requested_ids <- rtweet::lookup_statuses(request_ids) %>% 
+requested_ids <- rtweet::lookup_statuses(request_ids, token = my_token) %>% 
+    filter(
+        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
+    ) %>% 
     pull(status_id)
 
 
