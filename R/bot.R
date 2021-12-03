@@ -52,9 +52,6 @@ request_ids <- rtweet::get_mentions(
 
 # get requested IDS
 requested_ids <- rtweet::lookup_statuses(request_ids) %>% 
-    filter(
-        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
-    ) %>% 
     pull(status_id)
 
 
