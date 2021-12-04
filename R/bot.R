@@ -39,26 +39,30 @@ status_ids <- rtweet::search_tweets(
 
 
 # get request ID
-request_ids <- rtweet::get_mentions(
+request_tweets <- rtweet::get_mentions(
     token = my_token, 
     tzone = "CET"
-) %>% 
-    filter(
-        created_at >= time_interval, # 15 min
-        grepl("@psicotuiterbot", text),
-        grepl("rt|RT|Rt", text),
-        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
-    ) %>% 
-    pull(status_in_reply_to_status_id)
+) 
 
-# get requested IDS
-requested_ids <- rtweet::lookup_statuses(request_ids, token = my_token) %>% 
-    filter(
-        !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
-    ) %>% 
-    pull(status_id)
-
-
+if (nrow(request_tweets) > 0) {
+    request_id <- request_tweets %>% 
+        filter(
+            created_at >= time_interval, # 15 min
+            grepl("@psicotuiterbot", text),
+            grepl("rt|RT|Rt", text),
+            !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
+        ) %>% 
+        pull(status_in_reply_to_status_id)
+    
+    # get requested IDS
+    requested_ids <- rtweet::lookup_statuses(request_ids, token = my_token) %>% 
+        filter(
+            !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
+        ) %>% 
+        pull(status_id)
+} else {
+    requested_ids <- NULL
+}
 # RT all IDs
 if (length(status_ids) > 0){
     for (i in 1:length(status_ids)){
