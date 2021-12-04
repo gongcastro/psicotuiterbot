@@ -45,7 +45,7 @@ request_tweets <- rtweet::get_mentions(
 ) 
 
 if (nrow(request_tweets) > 0) {
-    request_id <- request_tweets %>% 
+    request_ids <- request_tweets %>% 
         filter(
             created_at >= time_interval, # 15 min
             grepl("@psicotuiterbot", text),
@@ -72,7 +72,7 @@ if (length(status_ids) > 0){
         )
     }
     # tweet requests
-    if (length(request_ids) > 0){
+    if (nrow(request_tweets) > 0){
         for (i in 1:length(requested_ids)){
             rtweet::post_tweet(
                 retweet_id = unique(requested_ids[i]), # vector with IDs
