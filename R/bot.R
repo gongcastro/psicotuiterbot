@@ -75,7 +75,7 @@ if (nrow(request_tweets) > 0) {
 if (length(status_ids) > 0){
     for (i in 1:length(status_ids)){
         rtweet::post_tweet(
-            retweet_id = unique(status_ids[i]), # vector with IDs
+            retweet_id = unique(status_ids)[i], # vector with IDs
             token = my_token
         )
     }
@@ -85,10 +85,10 @@ if (length(status_ids) > 0){
 }
 
 # tweet requests
-if (nrow(request_tweets) > 0){
+if (length(requested_ids) > 0){
     for (i in 1:length(requested_ids)){
         rtweet::post_tweet(
-            retweet_id = unique(requested_ids[i]), # vector with IDs
+            retweet_id = unique(requested_ids)[i], # vector with IDs
             token = my_token
         )
     }
