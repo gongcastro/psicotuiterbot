@@ -55,11 +55,15 @@ if (nrow(request_tweets) > 0) {
         pull(status_in_reply_to_status_id)
     
     # get requested IDS
-    requested_ids <- rtweet::lookup_statuses(request_ids, token = my_token) %>% 
-        filter(
-            !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
-        ) %>% 
-        pull(status_id)
+    if (length(request_ids) > 0) {
+        requested_ids <- rtweet::lookup_statuses(request_ids, token = my_token) %>% 
+            filter(
+                !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
+            ) %>% 
+            pull(status_id)
+    } else {
+        requested_ids <- NULL
+    }
 } else {
     requested_ids <- NULL
 }
