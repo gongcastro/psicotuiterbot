@@ -42,4 +42,4 @@ fig <- ggplot(tweets_all, aes(created_at, y = n)) +
     labs(x = "Fecha", y = "Tweets mencionando #psictuiter o #psicotwitter") +
     theme_github()
 
-ggsave(filename = here::here("img", "counts.png"), plot = fig, dpi = 1000, height = 4, width = 8)
+ggsave(fig, filename = here::here("img", "counts.png"), plot = fig, dpi = 1000, height = 4, width = 8)
