@@ -23,13 +23,15 @@ hate_words <- unlist(strsplit(Sys.getenv("HATE_WORDS"), " ")) # words banned fro
 time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(120)
 
 # get mentions to #psicotuiter and others
-status_ids <- rtweet::search_tweets(
+all_tweets <- rtweet::search_tweets(
     hashtags, 
     type = "recent", 
     token = my_token, 
     include_rts = FALSE, 
     tzone = "CET"
-) %>% 
+) 
+
+status_ids <- all_tweets %>% 
     filter(
         created_at >=  time_interval, # 15 min
         !grepl(paste(hate_words, collapse = "|"), text), # filter out hate words
@@ -67,6 +69,8 @@ if (nrow(request_tweets) > 0) {
 } else {
     requested_ids <- NULL
 }
+
+
 # RT all IDs
 if (length(status_ids) > 0){
     for (i in 1:length(status_ids)){
@@ -75,18 +79,20 @@ if (length(status_ids) > 0){
             token = my_token
         )
     }
-    # tweet requests
-    if (nrow(request_tweets) > 0){
-        for (i in 1:length(requested_ids)){
-            rtweet::post_tweet(
-                retweet_id = unique(requested_ids[i]), # vector with IDs
-                token = my_token
-            )
-        }
-        print(paste0(length(requested_ids), " request(s) posted: ", paste(requested_ids, collapse = ", ")))
-        
-    }
-    print(paste0(length(status_ids), " tweet(s) posted: ", paste(status_ids, collapse = ", ")))
+    print(paste0(length(status_ids), " RT(s): ", paste(status_ids, collapse = ", ")))
 } else {
-    print("No tweets to post")
+    print("No tweets to RT")
+}
+
+# tweet requests
+if (nrow(request_tweets) > 0){
+    for (i in 1:length(requested_ids)){
+        rtweet::post_tweet(
+            retweet_id = unique(requested_ids[i]), # vector with IDs
+            token = my_token
+        )
+    }
+    print(paste0(length(requested_ids), " request(s) posted: ", paste(requested_ids, collapse = ", ")))
+} else {
+    print("No requests")
 }
