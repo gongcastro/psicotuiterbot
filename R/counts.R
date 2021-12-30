@@ -36,11 +36,16 @@ tweets_all <- lapply(files, readRDS) %>%
     count(created_at)
 
 # save image
-png(here::here("img", "counts.png"), res = 1000, height = 4, width = 8, units = "in")
-ggplot(tweets_all, aes(created_at, y = n)) +
+fig <- ggplot(tweets_all, aes(created_at, y = n)) +
     geom_vline(xintercept = lubridate::dmy("9-10-2021"), colour = "grey", size = 1) +
     geom_line(colour = "#ff4d00", size = 1.5) +
     # geom_point(colour = "#ff4d00", size = 3, stroke = 1, fill = "black") +
-    labs(x = "Fecha", y = "Tweets mencionando #psictuiter o #psicotwitter") +
+    labs(x = "Fecha", y = "Tweets mencionando #psicotuiter o #psicotwitter") +
     theme_github()
-dev.off()
+
+cur_dev <- dev.cur()
+ggsave(here::here("img", "counts.png"), fig, height = 4, width = 8, dpi = 1000)
+dev.set(cur_dev)
+
+
+
