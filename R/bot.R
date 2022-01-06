@@ -20,6 +20,8 @@ my_token <- rtweet::create_token(
 hashtags_vct <- c("#psicotuiter", "#psicotwitter", "#Psicotuiter", "#Psicotwitter", "#PsicoTuiter", "#PsicoTwitter")
 hashtags <- paste(hashtags_vct, collapse = " OR ")
 hate_words <- unlist(strsplit(Sys.getenv("HATE_WORDS"), " ")) # words banned from psicotuiterbot (separated by a space)
+blocked_accounts <- unlist(strsplit(Sys.getenv("BLOCKED_ACCOUNTS"), " ")) # accounts banned from psicotuiterbot (separated by a space)
+
 time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(120)
 
 # get mentions to #psicotuiter and others
