@@ -30,7 +30,7 @@ if (nrow(msg) > 0){
         sender_name <- rtweet::lookup_users(msg$message_create$sender_id[i])$screen_name
         
         # if message is sent by VIP user and contains keyword "block"
-        if (is_block && paste0("@", sender_name) %in% vip_users){
+        if (is_block & (paste0("@", sender_name) %in% vip_users)){
             msg_text_vct <- unlist(strsplit(msg_text, " "))
             target_users <- msg_text_vct[grepl("@", msg_text_vct)]
             
@@ -47,7 +47,7 @@ if (nrow(msg) > 0){
                 message(paste0("User(s) ", paste0(repeated_target, collapse = " "), " has already been blocked"))
             }
         } else {
-            message(paste0("Message if from a non-VIP: ", paste0("@", sender_name)))
+            message(paste0("Message from a non-VIP: ", paste0("@", sender_name)))
         }
     }
 }
