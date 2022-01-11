@@ -27,7 +27,7 @@ if (nrow(msg) > 0){
     for (i in 1:nrow(msg)){
         msg_text <- msg$message_create$message_data$text[i]
         is_block <- grepl("block|block|bloquea", tolower(msg_text))
-        sender_name <- rtweet::lookup_users(msg$message_create$sender_id[i])$screen_name
+        sender_name <- rtweet::lookup_users(msg$message_create$sender_id[i], token = my_token)$screen_name
         
         # if message is sent by VIP user and contains keyword "block"
         if (is_block & (paste0("@", sender_name) %in% vip_users)){
