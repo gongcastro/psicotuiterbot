@@ -35,7 +35,8 @@ all_tweets <- rtweet::search_tweets(
 
 status_ids <- all_tweets %>% 
     filter(
-        created_at >=  time_interval, # 15 min
+        !(screen_name %in% gsub("@", "", blocked_accounts)),
+        created_at >= time_interval, # 15 min
         !grepl(paste(hate_words, collapse = "|"), text), # filter out hate words
         stringr::str_count(text, "#") < 4, # no more than 3 hashtags
         lang %in% c("es", "und") # in Spanish or undefined language
