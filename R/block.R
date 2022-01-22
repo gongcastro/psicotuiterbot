@@ -14,42 +14,41 @@ my_token <- rtweet::create_token(
     set_renv = FALSE
 )
 
-vip_users <- unlist(strsplit(Sys.getenv("VIP_USERS"), " "))
-blocked_accounts <- Sys.getenv("BLOCKED_ACCOUNTS")
-blocked_accounts_vct <- unlist(strsplit(blocked_accounts, split = " "))
+vip_users <- gsub("@", "", unlist(strsplit(Sys.getenv("VIP_USERS"), " ")))
+vip_users_id <- rtweet::lookup_users(vip_users, token = my_token)$user_id
 
 # get DMs
 msg <- rtweet::direct_messages(n = 10, token = my_token)$events
+msg <- dplyr::arrange(msg, created_timestamp)
 
 # if new DMs have been received
 if (nrow(msg) > 0){
     # for each received DM
-    for (i in 1:nrow(msg)){
-        msg_text <- msg$message_create$message_data$text[i]
-        is_block <- grepl("block|block|bloquea", tolower(msg_text))
-        sender_name <- rtweet::lookup_users(msg$message_create$sender_id[i], token = my_token)$screen_name
-        
-        # if message is sent by VIP user and contains keyword "block"
-        if (is_block & (paste0("@", sender_name) %in% vip_users)){
-            msg_text_vct <- unlist(strsplit(msg_text, " "))
-            target_users <- msg_text_vct[grepl("@", msg_text_vct)]
-            
-            # if at least one targeted users has not been blocked yet
-            if (!all(target_users %in% blocked_accounts_vct)){
-                target_users_str <- paste0(target_users, collapse = " ")
-                blocked_accounts_new <- paste0(blocked_accounts, " ", target_users_str)
-                renviron_text <- paste0('BLOCKED_ACCOUNTS = "', blocked_accounts_new, '"')
-                write(renviron_text, ".Renviron", append = TRUE)
-                message(paste0("User(s) ", paste0(target_users_str, collapse = " "), " is now blocked"))
-                
-            } else {
-                repeated_target <- target_users[which(target_users %in% blocked_accounts_vct)]
-                message(paste0("User(s) ", paste0(repeated_target, collapse = " "), " has already been blocked"))
-            }
-        } else {
-            message(paste0("Message from a non-VIP: ", paste0("@", sender_name)))
-        }
-    }
+    blocked_accounts <- Sys.getenv("BLOCKED_ACCOUNTS")
+    blocked_accounts_vct <- unlist(strsplit(blocked_accounts, split = " "))
+    
+    # get target users
+    msg_text <- msg$message_create$message_data$text
+    is_block <- grepl("block|block|bloquea", tolower(msg_text)) # is the DM asking for a block
+    is_vip_sender_name <- msg$message_create$sender_id %in% vip_users_id # is the DM from a VIP account?
+    
+    str_rm <- "block @|block @|bloquea @|Block @|Block @|Bloquea @"
+    target_users <- gsub(str_rm, "", msg_text[is_block & is_vip_sender_name])
+    
+    # get list of repeated and new users to block
+    repeated_users <- target_users[paste0("@", target_users) %in% blocked_accounts_vct]
+    new_users <- target_users[!(paste0("@", target_users) %in% blocked_accounts_vct)]
+    
+    # prepare strings
+    blocked_accounts_new <- sort(unique(c(blocked_accounts_vct, paste0("@", target_users))))
+    renviron_text <- paste0('BLOCKED_ACCOUNTS = "', paste0(blocked_accounts_new, collapse = " "), '"')
+    
+    # remove last line in .Renviron and write new one
+    env_lines <- readLines(".Renviron")
+    writeLines(env_lines[-length(env_lines)], con = ".Renviron")
+    write(renviron_text, ".Renviron", append = TRUE)
+    
+    # print results in console
+    if (length(new_users > 0)) message(paste0("User(s) ", paste0(new_users, collapse = " "), " now blocked"))
+    if (length(repeated_users > 0)) message(paste0("User(s) ", paste0(repeated_users, collapse = " "), " had already been blocked"))
 }
-
-
