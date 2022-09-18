@@ -1,4 +1,3 @@
-
 # authenticate Twitter API
 my_token <- get_api_token()
 
@@ -55,7 +54,6 @@ if (length(status_ids) > 0){
     }
     message(paste0("RTs: ", length(status_ids), paste(status_ids, collapse = ", ")))
 }
-
 
 # RT requests ----
 request_tweets <- rtweet::get_mentions(token = my_token, tzone = "CET") 
