@@ -25,6 +25,5 @@ jobs:
         shell: Rscript {0}
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-          renv::restore()
       - name: Create and post tweet
-        run: Rscript R/bot.R
+        run: sh/rt.sh

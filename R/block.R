@@ -5,16 +5,9 @@ options(httr_oob_default = TRUE)
 renv::restore()
 
 # authenticate Twitter API
-my_token <- rtweet::create_token(
-    app = "psicotuiterbot",  # the name of the Twitter app
-    consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
-    consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_KEY_SECRET"),
-    access_token = Sys.getenv("TWITTER_ACCESS_TOKEN"),
-    access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET"), 
-    set_renv = FALSE
-)
+my_token <- get_api_token()
 
-vip_users <- gsub("@", "", unlist(strsplit(Sys.getenv("VIP_USERS"), " ")))
+vip_users <- get_vip_accounts()
 vip_users_id <- rtweet::lookup_users(vip_users, token = my_token)$user_id
 
 # get DMs
@@ -24,8 +17,7 @@ msg <- dplyr::arrange(msg, created_timestamp)
 # if new DMs have been received
 if (nrow(msg) > 0){
     # for each received DM
-    blocked_accounts <- Sys.getenv("BLOCKED_ACCOUNTS")
-    blocked_accounts_vct <- unlist(strsplit(blocked_accounts, split = " "))
+    blocked_accounts_vct <- get_blocked_accounts()
     
     # get target users
     msg_text <- msg$message_create$message_data$text
@@ -41,7 +33,12 @@ if (nrow(msg) > 0){
     
     # prepare strings
     blocked_accounts_new <- sort(unique(c(blocked_accounts_vct, paste0("@", target_users))))
-    renviron_text <- paste0('BLOCKED_ACCOUNTS = "', paste0(blocked_accounts_new, collapse = " "), '"')
+    
+    renviron_text <- paste0(
+        'BLOCKED_ACCOUNTS = "', 
+        paste0(blocked_accounts_new, collapse = " "),
+        '"'
+    )
     
     # remove last line in .Renviron and write new one
     env_lines <- readLines(".Renviron")

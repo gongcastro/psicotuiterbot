@@ -1,16 +1,37 @@
 # helper functions
 
-theme_github <- function(){
-    theme_minimal() +
-    theme(
-        panel.grid.major.x = element_line(colour = "white", linetype = "dotted"),
-        panel.grid.minor.x = element_line(colour = "black", linetype = "dotted"),
-        panel.grid.major.y = element_line(colour = "white", linetype = "dotted"),
-        panel.grid.minor.y = element_line(colour = "black", linetype = "dotted"),
-        panel.background = element_rect(fill = "transparent", colour = NA),
-        axis.text = element_text(size = 12, colour = "#ff4d00"),
-        axis.title.x = element_blank(),
-        axis.title.y = element_text(colour = "#ff4d00", size = 12), 
-        axis.line = element_line(colour = "#ff4d00", size = 1)
+# get Twitter API token
+get_api_token <- function(silent = FALSE){
+    rtweet::create_token(
+        app = "psicotuiterbot",  # the name of the Twitter app
+        consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
+        consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_KEY_SECRET"),
+        access_token = Sys.getenv("TWITTER_ACCESS_TOKEN"),
+        access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET"), 
+        set_renv = FALSE
     )
+    
+    if (!silent) message("API token created")
+}
+
+# get hate words
+get_hate_words <- function(){
+    # words banned from psicotuiterbot (separated by a space)
+    unlist(strsplit(Sys.getenv("HATE_WORDS"), " ")) 
+}
+
+# get blocked accounts
+get_blocked_accounts <- function(){
+    # accounts banned from psicotuiterbot (separated by a space)
+    unlist(strsplit(Sys.getenv("BLOCKED_ACCOUNTS"), " ")) 
+}
+
+# get VIP accounts
+get_vip_accounts <- function(){
+    gsub("@", "", unlist(strsplit(Sys.getenv("VIP_USERS"), " ")))
+}
+
+# count the number of appearances of character in string
+count_character <- function(x, pattern){
+    lengths(regmatches(x, gregexpr(pattern, x)))
 }
