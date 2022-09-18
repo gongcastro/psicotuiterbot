@@ -7,7 +7,7 @@ on:
 jobs:
 
   psicotuiterbot-post:
-    runs-on: macos-12
+    runs-on: ubuntu-20.04
     env: #  twitter API keys (used to authenticate) defined in the gh actions environment
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
       TWITTER_CONSUMER_API_KEY_SECRET: ${{ secrets.TWITTER_CONSUMER_API_KEY_SECRET }}
@@ -26,8 +26,6 @@ jobs:
         
       - name: Cache packages
         uses: actions/cache@v1
-        
-     
         with:
             path: ${{ env.RENV_PATHS_ROOT }}
             key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
