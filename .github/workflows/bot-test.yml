@@ -16,20 +16,33 @@ jobs:
       RENV_PATHS_ROOT: ~/.local/share/renv
       
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        
       - name: Cache packages
         uses: actions/cache@v1
+        
+     
         with:
             path: ${{ env.RENV_PATHS_ROOT }}
             key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
             restore-keys: |
                 ${{ runner.os }}-renv-
+                
       - name: Restore packages
         shell: Rscript {0}
         run: |
             if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
             renv::restore()
+            
       - name: Test rt script
         run: sh/rt.sh
+        
       - name: Test block script
         run: sh/block.sh
         
