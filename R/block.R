@@ -1,9 +1,3 @@
-# update blocked accounts
-options(httr_oob_default = TRUE)
-
-# restore packages
-renv::restore()
-
 # authenticate Twitter API
 my_token <- get_api_token()
 
@@ -12,7 +6,7 @@ vip_users_id <- rtweet::lookup_users(vip_users, token = my_token)$user_id
 
 # get DMs
 msg <- rtweet::direct_messages(n = 10, token = my_token)$events
-msg <- dplyr::arrange(msg, created_timestamp)
+msg <- poorman::arrange(msg, created_timestamp)
 
 # if new DMs have been received
 if (nrow(msg) > 0){

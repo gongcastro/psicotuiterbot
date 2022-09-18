@@ -1,8 +1,3 @@
-options(httr_oob_default = TRUE)
-
-# restore packages
-renv::restore()
-message("renv restored")
 
 # authenticate Twitter API
 my_token <- get_api_token()
@@ -99,7 +94,6 @@ if (nrow(request_tweets) > 0) {
     }
 }
 
-
 # tweet requests
 if (length(requested_ids) > 0){
     
@@ -111,4 +105,3 @@ if (length(requested_ids) > 0){
     }
     message(paste0("RT requests: ", length(requested_ids), " request(s) posted: ", paste(requested_ids, collapse = ", ")))
 }
-
