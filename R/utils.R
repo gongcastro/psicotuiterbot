@@ -1,8 +1,6 @@
-# helper functions
-
 # get Twitter API token
 get_api_token <- function(silent = FALSE){
-    rtweet::create_token(
+    tok <- rtweet::create_token(
         app = "psicotuiterbot",  # the name of the Twitter app
         consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
         consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_KEY_SECRET"),
@@ -10,8 +8,8 @@ get_api_token <- function(silent = FALSE){
         access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET"), 
         set_renv = FALSE
     )
-    
     if (!silent) message("API token created")
+    return(tok)
 }
 
 # get hate words
