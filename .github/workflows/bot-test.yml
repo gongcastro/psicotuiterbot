@@ -43,10 +43,16 @@ jobs:
             if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
             renv::restore()
             
-      - name: Test rt script
-        run: sh/rt.sh
-        
       - name: Test block script
-        run: sh/block.sh
+        run: |
+          chmod +x ./sh/block.sh
+          ./sh/block.sh
+        shell: bash
+        
+      - name: Test rt script
+        run: |
+          chmod +x ./sh/rt.sh
+          ./sh/rt.sh
+        shell: bash
         
         
