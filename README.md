@@ -1,4 +1,4 @@
-icotuiterbot :robot:
+# Psicotuiterbot :robot: <img src='img/logo.jpg' align="right" style="float:right; height:200px; margin-left:10%;"/>
 
 ![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fpsicotuiterbot)
 ![GitHub top language](https://img.shields.io/github/languages/top/gongcastro/psicotuiterbot)
@@ -21,12 +21,6 @@ icotuiterbot :robot:
 * En caso de incluir #psicotuiter o #psicotwitter en un hilo, se recomienda hacerlo sólo en el primer tweet (o al menos no hacerlo en todos los tweets), para evitar saturar el timeline de otras personas
 
 Los criterios de exclusión se aplican tanto a los tuits que mencionen los hashtags como a los tuits para los que se solicite RT.
-
-## Actividad del hashtag :chart_with_upwards_trend:
-
-Esta figura muestra la actividad de #psicotuiter y #psicotwitter. La línea vertical indica la fecha de creación y puesta en marcha del bot.
-
-![](https://github.com/gongcastro/psicotuiterbot/blob/main/img/counts.png)
 
 
 ## Contribuir al bot :love_you_gesture:

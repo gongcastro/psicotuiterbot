@@ -1,5 +1,6 @@
 # authenticate Twitter API
 my_token <- get_api_token()
+print(my_token)
 vip_users <- get_vip_accounts()
 vip_users_id <- rtweet::lookup_users(vip_users, token = my_token)$user_id
 
