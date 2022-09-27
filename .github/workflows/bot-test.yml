@@ -42,8 +42,8 @@ jobs:
         run: |
             if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
             renv::restore()
-            
-      - name: Test block script
+        
+      - name: Test rt script
         env:
           TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           TWITTER_CONSUMER_API_KEY_SECRET: ${{ secrets.TWITTER_CONSUMER_API_KEY_SECRET }}
@@ -51,13 +51,6 @@ jobs:
           HATE_WORDS: ${{ secrets.HATE_WORDS }}
           VIP_USERS: ${{ secrets.VIP_USERS }}
           BLOCKED_ACCOUNTS: ${{ secrets.BLOCKED_ACCOUNTS }}
-        run: |
-          sed -i -e 's/\r$//' sh/block.sh
-          chmod +x sh/block.sh
-          sh/block.sh
-        shell: bash
-        
-      - name: Test rt script
         run: |
           sed -i -e 's/\r$//' sh/rt.sh
           chmod +x sh/rt.sh
