@@ -3,10 +3,12 @@ my_token <- get_api_token()
 print(my_token)
 vip_users <- get_vip_accounts()
 vip_users_id <- rtweet::lookup_users(vip_users, token = my_token)$user_id
+print(vip_users)
 
 # get DMs
 msg <- rtweet::direct_messages(n = 10, token = my_token)$events
 msg <- poorman::arrange(msg, created_timestamp)
+print(msg)
 
 # if new DMs have been received
 if (nrow(msg) > 0){
