@@ -16,7 +16,7 @@ hate_words <- get_hate_words() # hate words will be filtered later
 blocked_accounts <- get_blocked_accounts() # blocked accounts will be filtered later
 
 # define time limit
-time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(60)
+time_interval <- lubridate::now(tzone = "UCT")-lubridate::minutes(60*4)
 
 # RT mentions to any hashtag ----
 
