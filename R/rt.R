@@ -31,15 +31,14 @@ all_tweets <- rtweet::search_tweets(
 message("RTs: tweets retrieved")
 
 # retrieve status ID of mentions to any hashtag
-status_ids <- all_tweets |>
-    poorman::filter(
-        !(screen_name %in% gsub("@", "", blocked_accounts)), # if user has not been blocked
-        created_at >= time_interval, # 2 hours
-        !grepl(paste(hate_words, collapse = "|"), text), # filter out hate words
-        count_character(text, "#") < 4, # no more than 3 hashtags
-        lang %in% c("es", "und") # in Spanish or undefined language
-    ) |> 
-    poorman::pull("status_id")
+status_ids <- poorman::filter(
+    all_tweets,
+    !(screen_name %in% gsub("@", "", blocked_accounts)), # if user has not been blocked
+    created_at >= time_interval, # 2 hours
+    !grepl(paste(hate_words, collapse = "|"), text), # filter out hate words
+    count_character(text, "#") < 4, # no more than 3 hashtags
+    lang %in% c("es", "und") # in Spanish or undefined language
+)$status_id
 
 message("RTs: status IDs retrieved")
 
@@ -64,28 +63,25 @@ requested_ids <- NULL
 
 if (nrow(request_tweets) > 0) {
     
-    request_ids <- request_tweets |> 
-        poorman::filter(
+    request_ids <- poorman::filter(
+            request_tweets,
             created_at >= time_interval, # 2 hours limit
             !(in_reply_to_screen_name %in% gsub("@", "", blocked_accounts)), # if user has not been blocked
             grepl("@psicotuiterbot", text), # get only if mentions @psicotuiterbot
             grepl("rt|RT|Rt", text), # get only if asks for RT
             !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
-        ) |> 
-        poorman::pull(status_in_reply_to_status_id)
+        )$status_in_reply_to_status_id
     
     message("RT requests: request IDs retrieved")
     
     # get requested IDS
     if (length(request_ids) > 0) {
         
-        request_ids <- request_ids |>
-            rtweet::lookup_statuses(token = my_token) |>
-            poorman::filter(
+        request_ids <- poorman::filter(
+                rtweet::lookup_statuses(request_ids, token = my_token),
                 !(screen_name %in% gsub("@", "", blocked_accounts)), # if user has not been blocked
                 !grepl(paste(hate_words, collapse = "|"), text) # filter out hate words
-            ) |> 
-            poorman::pull(status_id) 
+            )$status_id
             
             message("RT requests: requested IDs retrieved")
             
